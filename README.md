@@ -2,6 +2,8 @@
 
 This is a tool that lets non-technical people airdrop to their communities in a safe way, so you never have to give someone else your private key.
 
+## CREATED BY EMERALD CITY DAO
+
 ## Steps
 
 Here are the steps you must follow.
