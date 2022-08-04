@@ -18,7 +18,7 @@ transaction(addresses: [Address]) {
   execute {
     for address in addresses {
       let RecipientCollection = getAccount(address).getCapability(PUBLIC_PATH)
-                                    .borrow<&CONTRACT_NAME.Collection{NonFungibleToken.Receiver}>()
+                                    .borrow<&{NonFungibleToken.Receiver}>()
                                     ?? panic("[ERROR] The recipient with address ".concat(address.toString()).concat(" does not have a collection sert up."))
       let nft <- self.GiverCollection.withdraw(withdrawID: self.IDs.removeFirst())
       RecipientCollection.deposit(token: <- nft)
