@@ -2,12 +2,13 @@ const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
 const fcl = require("@onflow/fcl");
+const { serverAuthorization } = require('./helpers');
 
 fcl.config()
   .put("accessNode.api", "https://rest-mainnet.onflow.org")
 
 const address_list = fs.readFileSync(path.resolve(__dirname, 'address_list.csv'), 'utf8');
-const airdrop_tx = fs.readFileSync(path.resolve(__dirname, 'airdrop.cdc'), 'utf8');
+const airdrop_tx = fs.readFileSync(path.resolve(__dirname, 'cadence/airdrop.cdc'), 'utf8');
 
 async function askQuestion(query) {
   const rl = readline.createInterface({
@@ -47,9 +48,9 @@ async function execute() {
     args: (arg, t) => {
       arg(addresses, t.Array(t.Address))
     },
-    proposer: authorizationFunction,
-    payer: authorizationFunction,
-    authorizations: [authorizationFunction],
+    proposer: serverAuthorization,
+    payer: serverAuthorization,
+    authorizations: [serverAuthorization],
     limit: 9999
   });
 

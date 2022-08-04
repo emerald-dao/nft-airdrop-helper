@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/emerald-dao/nft-airdrop-helper#readme",
   "dependencies": {
-    "@onflow/fcl": "^1.2.0"
+    "@onflow/fcl": "^1.2.0",
+    "elliptic": "^6.5.4",
+    "sha3": "^2.1.4"
   }
 }

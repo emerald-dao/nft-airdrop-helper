@@ -1,4 +1,5 @@
 const { SHA3 } = require("sha3");
+const fcl = require("@onflow/fcl");
 
 var EC = require('elliptic').ec;
 const ec = new EC('p256');
