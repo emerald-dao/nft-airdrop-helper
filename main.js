@@ -54,7 +54,17 @@ async function execute() {
     limit: 9999
   });
 
-  console.log(`Transaction: https://flowscan.org/transaction/${transactionId}`)
+  console.log(`Transaction: https://flowscan.org/transaction/${transactionId}`);
+  console.log('[PENDING] ...');
+
+  const { status, statusCode, errorMessage } = await fcl.tx(transactionId).onceSealed();
+
+  if (status === 4 && statusCode === 0) {
+    console.log('[SUCCESS]');
+  } else {
+    console.log('[ERROR]', errorMessage);
+  }
+
 }
 
 execute();
