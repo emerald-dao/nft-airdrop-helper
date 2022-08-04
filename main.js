@@ -60,7 +60,7 @@ async function execute() {
   const { status, statusCode, errorMessage } = await fcl.tx(transactionId).onceSealed();
 
   if (status === 4 && statusCode === 0) {
-    console.log('[SUCCESS]');
+    console.log('[SUCCESS] :D Yay');
   } else {
     console.log('[ERROR]', errorMessage);
   }
