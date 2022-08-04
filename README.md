@@ -12,7 +12,7 @@ Here are the steps you must follow.
 
 Go to the `.env` file and add in all the required info.
 
-**PRIVATE_KEY** - Your private key
+**PRIVATE_KEY** - Your private key (NOTE: NEVER SHARE THIS WITH ANYBODY)
 
 **CONTRACT_NAME** - The name of your collection's contract (ex. FLOAT)
 
