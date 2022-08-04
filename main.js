@@ -1,8 +1,13 @@
 const readline = require('readline');
 const fs = require('fs');
 const path = require('path');
+const fcl = require("@onflow/fcl");
 
-const address_list = fs.readFileSync(path.resolve(__dirname, 'address_list.csv'), 'utf8')
+fcl.config()
+  .put("accessNode.api", "https://rest-mainnet.onflow.org")
+
+const address_list = fs.readFileSync(path.resolve(__dirname, 'address_list.csv'), 'utf8');
+const airdrop_tx = fs.readFileSync(path.resolve(__dirname, 'airdrop.cdc'), 'utf8');
 
 async function askQuestion(query) {
   const rl = readline.createInterface({
@@ -14,6 +19,14 @@ async function askQuestion(query) {
     rl.close();
     resolve(ans);
   }))
+}
+
+function replaceWithProperValues(txCode) {
+  return txCode
+    .replaceAll('CONTRACT_NAME', process.env.CONTRACT_NAME)
+    .replaceAll('CONTRACT_ADDRESS', process.env.CONTRACT_ADDRESS)
+    .replaceAll('STORAGE_PATH', process.env.STORAGE_PATH)
+    .replaceAll('PUBLIC_PATH', process.env.PUBLIC_PATH)
 }
 
 async function execute() {
@@ -28,6 +41,19 @@ async function execute() {
   if (ans !== 'OK') {
     console.log('[CANCELLED] The user did not type OK.')
   }
+
+  const transactionId = await fcl.mutate({
+    cadence: replaceWithProperValues(airdrop_tx),
+    args: (arg, t) => {
+      arg(addresses, t.Array(t.Address))
+    },
+    proposer: authorizationFunction,
+    payer: authorizationFunction,
+    authorizations: [authorizationFunction],
+    limit: 9999
+  });
+
+  console.log(`Transaction: https://flowscan.org/transaction/${transactionId}`)
 }
 
 execute();
